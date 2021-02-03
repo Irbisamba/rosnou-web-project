@@ -1,0 +1,21 @@
+plugins {
+    id 'war'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '8.5.23'
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '8.5.23'
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-logging-juli', version: '9.0.0.M6'
+    compile group: 'org.apache.tomcat', name: 'tomcat-jasper', version: '8.5.23'
+    compile group: 'org.apache.tomcat', name: 'tomcat-jasper-el', version: '8.5.23'
+    compile group: 'org.apache.tomcat', name: 'tomcat-jsp-api', version: '8.5.23'
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+}
