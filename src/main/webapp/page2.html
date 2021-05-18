@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Вторая страница</title>
+    <link rel="stylesheet" href="style2.css">
+    <link rel="icon" type="image" href="favicon.ico">
+</head>
+<body>
+<script language="JavaScript">
+    document.cookie = "cookiename=value; path=/";
+
+    function daysLeft() {
+        var userName = GetCookie('username');
+
+        if (userName == null)
+        {
+            // пользователь не зарегистрирован
+            userName = 'Гость';
+        }
+        var userInput = document.getElementById("userInput").value;
+        var pattern = /(\d{2})\.(\d{2})\.(\d{4})/;
+        var dt = new Date(userInput.replace(pattern,'$3-$2-$1'));
+
+        var year = dt.getFullYear();
+        var month = dt.getMonth() + 1;
+        var day = dt.getDate();
+
+        var today = new Date();
+        today.setHours(0,0,0,0);
+        var nextDate = new Date([today.getFullYear(),month,day].join(','));
+        if (nextDate < today) nextDate.setFullYear(today.getFullYear()+1);
+
+        msPerDay = 24*60*60*1000;
+        daysLeft = Math.round((nextDate.getTime() - today.getTime())/msPerDay);
+        dayname = "";
+        ds = ""+daysLeft;
+
+        dd=parseInt(ds.substr(ds.length-1));
+
+        if(daysLeft>4&&daysLeft<21)dayname=" дней";
+        else
+        if(dd==1)dayname=" день";
+        else
+        if(dd==2||dd==3||dd==4)dayname=" дня";
+        else dayname=" дней";
+
+        if(daysLeft==0) {alert("С днем рождения, " + userName + "!");}
+        else {if(daysLeft==1) {alert("Завтра у Вас праздник, " + userName + "!");}
+        else {alert(userName + ", до вашего дня рождения осталось "+daysLeft+dayname+"!");}
+        }
+    }
+
+    // получение cookie по заданному смещению
+    function GetValue (offset)
+    {
+        var strEnd = document.cookie.indexOf (";", offset);
+        if (strEnd == -1)
+            strEnd = document.cookie.length;
+        return unescape(document.cookie.substring(offset, strEnd));
+    }
+
+    //получение cookie по имени
+    function GetCookie(name)
+    {
+        var key = name + "=";
+        var i = 0;
+        while (i < document.cookie.length) {
+            var j = i + key.length;
+            if (document.cookie.substring(i, j) == key)
+                return GetValue (j);
+            i = document.cookie.indexOf(" ", i) + 1;
+            if (i == 0)
+                break;
+        }
+        return null;
+    }
+
+    // установка cookie по имени
+    function SetCookie (name, value)
+    {
+        var argv = SetCookie.arguments;
+        var argc = SetCookie.arguments.length;
+        var expires = (argc > 2) ? argv[2] : null;
+        var path = (argc > 3) ? argv[3] : null;
+        var domain = (argc > 4) ? argv[4] : null;
+        var secure = (argc > 5) ? argv[5] : false;
+        document.cookie = name + "=" + escape (value) +
+            ((expires == null) ? "" : ("; expires=" +
+                expires)) +
+            ((path == null) ? "" : ("; path=" + path)) +
+            ((domain == null) ? "" : ("; domain=" + domain)) +
+            ((secure == true) ? "; secure": "");
+    }
+
+    var userName = GetCookie('username');
+
+    if (userName == null)
+    {
+        // пользователь не зарегистрирован
+        userName = 'Гость';
+    }
+    else
+    {
+        SetCookie('username',userName);
+    }
+    // выводим имя пользователя на страницу
+    document.write('<p align="center">Здравствуйте, ' + userName + '!' + '</p>');
+
+</script>
+<header>
+    <div>
+        <h1>Вторая страница</h1>
+        <form>
+            <input type="text" id="userInput">Когда у вас день рождения? Введите дату:</input>
+            <button onclick="daysLeft()">Submit</button>
+        </form>
+    </div>
+</header>
+<a href="index.html">1</a>
+<a href="page3.html">3</a>
+<a href="page4.html">4</a>
+</body>
+</html>
